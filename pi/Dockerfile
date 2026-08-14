@@ -19,8 +19,6 @@ ENV PATH="/root/.local/bin:/usr/local/bin:${PATH}"
 
 # Install KiloCode secara global
 RUN npm install -g --ignore-scripts @earendil-works/pi-coding-agent
-# 4. Install Headroom dari PyPI
-#RUN pip3 install --break-system-packages --ignore-installed typing_extensions headroom-ai[proxy,code]
 
 WORKDIR /app
 
