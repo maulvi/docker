@@ -46,7 +46,14 @@ usermod -aG lxd "$ADMIN_USER"
 sg lxd -c "echo 'Grup lxd aktif untuk sesi ini.'"
 
 echo "== Setup LXD =="
-lxd init
+read -rp "Jalankan lxd init sekarang? (yes/no) [default=no]: " DO_INIT
+DO_INIT="${DO_INIT:-no}"
+
+if [[ "$DO_INIT" == "yes" ]]; then
+  lxd init
+else
+  echo "Skip lxd init. Bisa dijalankan manual kapan saja: lxd init"
+fi
 
 echo "== Enable LXD UI =="
 
