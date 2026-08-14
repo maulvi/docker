@@ -19,3 +19,4 @@ Wants=tailscaled.service
 After=sys-subsystem-net-devices-tailscale0.device
 Wants=sys-subsystem-net-devices-tailscale0.device
 ```
+`lxc storage create pool-btrfs btrfs`
