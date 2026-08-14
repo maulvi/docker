@@ -7,7 +7,6 @@
 echo "net.ipv4.ip_nonlocal_bind = 1" | sudo tee /etc/sysctl.d/99-tailscale-bind.conf
 
 sudo sysctl -p
-
 ```
 
 `sudo systemctl edit ssh`
