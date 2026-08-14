@@ -1,0 +1,16 @@
+services:
+  dev-container:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pi
+    restart: unless-stopped
+    working_dir: /app
+    stdin_open: true
+    tty: true
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - /home/b/workspace/pi_vibe:/app
+      - /home/b/workspace/9router:/root
+networks: {}
