@@ -3,6 +3,8 @@
 # install tailscale enable tailscale ssh
 `tailscale set --ssh`
 # change ssh listening to only tailscale ip
+```echo "net.ipv4.ip_nonlocal_bind = 1" | sudo tee /etc/sysctl.d/99-tailscale-bind.conf```
+
 `sudo systemctl edit ssh`
 
 add this systemd lines
@@ -12,8 +14,4 @@ After=tailscaled.service
 Wants=tailscaled.service
 After=sys-subsystem-net-devices-tailscale0.device
 Wants=sys-subsystem-net-devices-tailscale0.device
-
-[Service]
-Restart=on-failure
-RestartSec=3
 ```
