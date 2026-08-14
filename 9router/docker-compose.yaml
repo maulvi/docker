@@ -1,0 +1,18 @@
+services:
+  dev-container:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: 9router
+    restart: always
+    working_dir: /app
+    stdin_open: true
+    tty: true
+    environment:
+      - NODE_ENV=production
+    ports:
+      - 100.100.12.34:20128:20128
+    volumes:
+      - /home/b/workspace/vibe:/app
+      - /home/b/workspace/9router:/root
+networks: {}
