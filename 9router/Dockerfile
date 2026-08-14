@@ -17,7 +17,6 @@ RUN apt-get update && apt-get install -y \
 ENV NPM_CONFIG_PREFIX=/usr/local
 ENV PATH="/root/.local/bin:/usr/local/bin:${PATH}"
 
-# Install KiloCode secara global
 RUN npm install -g pm2 9router
 # 4. Install Headroom dari PyPI
 RUN pip3 install --break-system-packages --ignore-installed typing_extensions headroom-ai[proxy,code]
