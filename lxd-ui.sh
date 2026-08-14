@@ -6,8 +6,17 @@ set -e
   exit 1
 }
 
-read -rp "Username admin LXD [${SUDO_USER:-$USER}]: " ADMIN_USER
-ADMIN_USER="${ADMIN_USER:-${SUDO_USER:-$USER}}"
+# Deteksi user yang menjalankan sudo
+if [[ -n "${SUDO_USER:-}" ]]; then
+  ADMIN_USER="$SUDO_USER"
+else
+  read -rp "Username admin LXD: " ADMIN_USER
+fi
+
+[[ -n "$ADMIN_USER" ]] || {
+  echo "Username tidak boleh kosong."
+  exit 1
+}
 
 id "$ADMIN_USER" >/dev/null 2>&1 || {
   echo "User '$ADMIN_USER' tidak ditemukan."
@@ -33,6 +42,9 @@ command -v lxd >/dev/null 2>&1 || {
 echo "== Tambah $ADMIN_USER ke grup lxd =="
 usermod -aG lxd "$ADMIN_USER"
 
+# Aktifkan grup lxd untuk user ini sekarang (tanpa logout/login)
+sg lxd -c "echo 'Grup lxd aktif untuk sesi ini.'"
+
 echo "== Setup LXD =="
 lxd init
 
@@ -53,5 +65,6 @@ lxc config set core.https_address "${LXD_BIND}:${LXD_PORT}"
 
 echo
 echo "Selesai."
-echo "Logout/login sebagai $ADMIN_USER agar grup lxd aktif."
+echo "User '$ADMIN_USER' sudah ditambahkan ke grup lxd."
+echo "Untuk sesi shell saat ini, grup lxd sudah aktif."
 echo "LXD UI: https://${LXD_BIND}:${LXD_PORT}"
