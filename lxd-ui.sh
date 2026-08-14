@@ -1,4 +1,18 @@
+#!/usr/bin/env bash
+set -e
 
+[[ $EUID -eq 0 ]] || {
+  echo "Jalankan: sudo $0"
+  exit 1
+}
+
+read -rp "Username admin LXD [${SUDO_USER:-$USER}]: " ADMIN_USER
+ADMIN_USER="${ADMIN_USER:-${SUDO_USER:-$USER}}"
+
+id "$ADMIN_USER" >/dev/null 2>&1 || {
+  echo "User '$ADMIN_USER' tidak ditemukan."
+  exit 1
+}
 
 echo "== Install snapd =="
 apt update
