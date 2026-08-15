@@ -1,0 +1,19 @@
+services:
+  9router-bun:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: 9router-bun
+    restart: unless-stopped
+    ports:
+      - "100.100.12.12:20128:20128"
+    environment:
+      NODE_ENV: production
+      HOSTNAME: 0.0.0.0
+      PORT: "20128"
+      DATA_DIR: /app/data
+      NEXT_PUBLIC_BASE_URL: http://localhost:20128
+    env_file:
+      - .env
+    volumes:
+      - ./data:/app/data
