@@ -1,0 +1,26 @@
+services:
+  microwarp:
+    image: ghcr.io/ccbkkb/microwarp:latest
+    container_name: microwarp
+    restart: always
+    ports:
+      - 0.0.0.0:1080:1080 # Hanya localhost, ganti ke "0.0.0.0:1080:1080" kalau mau akses dari network lain
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    environment:
+      - WARP_IPV6=false
+      - IPV6=false
+      - DISABLE_IPV6=true
+      - ENABLE_IPV6=0
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+      - net.ipv6.conf.all.disable_ipv6=1
+    volumes:
+      - ./warp-data:/etc/wireguard # Persistensi kredensial WARP
+    logging:
+      driver: json-file
+      options:
+        max-size: 5m
+        max-file: "3"
+networks: {}
