@@ -1,0 +1,22 @@
+services:
+  gomodel:
+    image: enterpilot/gomodel:latest
+    container_name: gomodel
+    restart: always
+    ports:
+      - 8080:8080
+    environment:
+      STORAGE_TYPE: sqlite
+      SQLITE_PATH: /app/data/gomodel.db
+      HTTP_PROXY: socks5://192.168.10.241:1080
+      HTTPS_PROXY: socks5://192.168.10.241:1080
+      http_proxy: socks5://192.168.10.241:1080
+      https_proxy: socks5://192.168.10.241:1080
+      NO_PROXY: localhost,127.0.0.1
+    volumes:
+      - /opt/stacks/gomodel/data:/app/data
+    working_dir: /app
+networks: {}
+x-dockge:
+  urls:
+    - http://192.168.10.241:8080/admin/dashboard/
